@@ -27,5 +27,21 @@ router.post('/signup', async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'El email ya se encuentra registrado'});
         }
-    } catch (error) {}
-})
+
+        const passwordHash = await bcrypt.hash(password, 10);
+
+        const newUser = {
+            id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
+            email: email.toLowerCase(),
+            passwordHash
+        };
+
+        users.push(newUser);
+        await writeUsers(users);
+
+        return res.status(201).json({ message: 'Usuario registrado satisfactoriamente' });
+    } catch (error) {
+        console.error('Error en signup: ', error);
+        return res.status(500).json({ message: 'Error interno' });
+    }
+});
