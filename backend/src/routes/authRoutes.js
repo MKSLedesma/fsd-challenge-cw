@@ -7,25 +7,25 @@ const router = express.Router();
 
 const isValidEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+};
 
 router.post('/signup', async (req, res) => {
     try {
-        const { email, passsword } = req.body;
+        const { email, password } = req.body;
 
         if (!email || !isValidEmail(email)) {
-            return res.status(400).json({ message: 'El email no tiene un formato valido'});
+            return res.status(400).json({ message: 'El email no tiene un formato valido' });
         }
 
         if (!password || password.length < 6) {
-            return res.status(400).json({ message: 'La contrasenia debe tener al menos 6 caracteres'});
+            return res.status(400).json({ message: 'La contrasenia debe tener al menos 6 caracteres' });
         }
 
         const users = await readUsers();
 
         const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
         if (existingUser) {
-            return res.status(400).json({ message: 'El email ya se encuentra registrado'});
+            return res.status(400).json({ message: 'El email ya se encuentra registrado' });
         }
 
         const passwordHash = await bcrypt.hash(password, 10);
@@ -55,15 +55,15 @@ router.post('/login', async (req, res) => {
         }
 
         const users = await readUsers();
-        const user = user.find(u => u.email.toLowerCase() === email.toLowerCase());
+        const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
 
         if (!user) {
-            return res.status(401).json({ message: 'Email o contrasenia invalidos'});
+            return res.status(401).json({ message: 'Email o contrasenia invalidos' });
         }
 
         const match = await bcrypt.compare(password, user.passwordHash);
         if (!match) {
-            return res.status(401).json({ message: 'Email o contrasenia invalidos'});
+            return res.status(401).json({ message: 'Email o contrasenia invalidos' });
         }
 
         const token = jwt.sign(
@@ -79,7 +79,7 @@ router.post('/login', async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Error en login: ', error); 
+        console.error('Error en login: ', error);
         return res.status(500).json({ message: 'Error interno' });
     }
 });
