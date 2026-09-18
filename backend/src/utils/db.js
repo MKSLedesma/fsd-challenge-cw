@@ -1,4 +1,3 @@
-const { write } = require('fs');
 const fs = require('fs/promises');
 const path = require('path');
 
@@ -18,7 +17,7 @@ async function readUsers() {
 }
 
 async function writeUsers(users) {
-    await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2), 'utf-8');
+    await fs.writeFile(userFilePath, JSON.stringify(users, null, 2), 'utf-8');
 }
 
 module.exports = {
