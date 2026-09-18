@@ -65,5 +65,23 @@ router.post('/login', async (req, res) => {
         if (!match) {
             return res.status(401).json({ message: 'Email o contrasenia invalidos'});
         }
-    } catch (error) {}
-})
+
+        const token = jwt.sign(
+            { id: user.id, email: user.email },
+            { expiresIn: '8h' }
+        );
+
+        return res.status(200).json({
+            token,
+            user: {
+                id: user.id,
+                email: user.email
+            }
+        });
+    } catch (error) {
+        console.error('Error en login: ', error); 
+        return res.status(500).json({ message: 'Error interno' });
+    }
+});
+
+module.exports = router;
