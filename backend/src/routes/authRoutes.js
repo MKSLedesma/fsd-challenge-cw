@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { readUsers, writeUsers } = require('../utils/db');
 
 const router = express.Router();
+const SecretKey = "clave_secreta"
 
 const isValidEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -68,6 +69,7 @@ router.post('/login', async (req, res) => {
 
         const token = jwt.sign(
             { id: user.id, email: user.email },
+            SecretKey,
             { expiresIn: '8h' }
         );
 
