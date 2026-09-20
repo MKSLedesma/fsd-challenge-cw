@@ -42,7 +42,6 @@ const Animales = () => {
             if (filtros.nombre.trim()) params.nombre = filtros.nombre.trim();
             if (filtros.clase) params.clase = filtros.clase;
             if (filtros.dieta) params.dieta = filtros.dieta;
-            if (filtros.habitat) params.habitat = filtros.habitat;
             if (filtros.continente) params.continente = filtros.continente;
             if (filtros.pesoMin !== '') params.pesoMin = filtros.pesoMin;
             if (filtros.pesoMax !== '') params.pesoMax = filtros.pesoMax;
@@ -63,11 +62,71 @@ const Animales = () => {
                 const res = await api.get('/animales/opciones');
                 setOpciones(res.data);
             } catch (error) {
-                console.error('No se pudieron cargar las opciones de filtros', err);
+                console.error('No se pudieron cargar las opciones de filtros', error);
             }
         };
 
         fetchOpciones();
         fetchAnimales();
     }, []);
-}
+
+    const handleBuscar = (e) => {
+        e.preventDefault();
+        fetchAnimales()
+    };
+
+    const handleLimpiar = (e) => {
+        setFiltros({
+            nombre: '',
+            clase: '',
+            dieta: '',
+            habitat: '',
+            continente: '',
+            pesoMin: '',
+            pesoMax: '',
+            enPeligro: false
+        });
+    };
+
+    return (
+        <div>
+            <form onSubmit={handleBuscar}>
+                <div>
+                    <div>
+                        <label>Nombre Comun:</label>
+                        <input type="text" name="nombre" value={filtros.nombre} onChange={handleChange} placeholder="Ej. Camaleón" />
+                    </div>
+
+                    <div>
+                        <label>Clase:</label>
+                        <select name="clase" value={filtros.clase} onChange={handleChange}>
+                            <option value="">Todas</option>
+                            {opciones.clases.map((clase) => (
+                                <option key={clase} value={clase}>{clase}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label>Dieta:</label>
+                    <select name="dieta" value={filtros.dieta} onChange={handleChange}>
+                        <option value="">Todas</option>
+                            {opciones.dietas.map((dieta) => (
+                            <option key={dieta} value={dieta}>{dieta}</option>
+                        ))}
+                    </select>
+
+                    <button type="submit" disabled={loading}>
+                        {loading ? 'Filtrando...' : 'Filtrar'}
+                    </button>
+                    <button type="button" onClick={handleLimpiar}>
+                        Limpiar filtros
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
+};
+
+export default Animales;
