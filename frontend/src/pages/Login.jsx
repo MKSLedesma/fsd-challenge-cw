@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../axios';
 
-const Signup = () => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -41,7 +41,7 @@ const Signup = () => {
                     {loading ? 'Iniciando sesión...' : "Iniciar sesión"}
                 </button>
             </form>
-            <p>¿No tenés cuenta? <Link to="/signup"Crear cuenta</Link></p>
+            <p>¿No tenés cuenta? <Link to="/signup">Crear cuenta</Link></p>
         </div>
     );
 };
