@@ -50,4 +50,25 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/opciones', async(req, res) => {
+    try {
+        const animales = await readAnimals();
+
+        const clases =  [...new Set(animales.map(a => a.clase).filter(Boolean))].sort();
+        const dietas =  [...new Set(animales.map(a => a.dieta).filter(Boolean))].sort();
+        const continentes =  [...new Set(animales.map(a => a.continente).filter(Boolean))].sort();
+        const habitat = [...new Set(animales.map(a => a.habitat).filter(Boolean))].sort();
+
+        return res.status(200).json({
+            clases,
+            dietas,
+            continentes,
+            habitat
+        });
+    } catch (error) {
+        console.error('Error al obtener las opciones de los filtros: ', error);
+        return res.status(500).json({ message: 'Error al obtener las opciones de los filtros'})
+    }
+});
+
 module.exports = router;
