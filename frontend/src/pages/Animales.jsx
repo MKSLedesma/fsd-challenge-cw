@@ -26,6 +26,22 @@ const NOMBRES_COLUMNAS = {
     enPeligroExtincion: 'En peligro de extinción'
 };
 
+const buildAnimalParams = (filtros) => {
+    const params = {};
+
+    if (filtros.nombre.trim()) params.nombre = filtros.nombre.trim();
+    if (filtros.clase) params.clase = filtros.clase;
+    if (filtros.dieta) params.dieta = filtros.dieta;
+    if (filtros.continente) params.continente = filtros.continente;
+    if (filtros.pesoMin !== '') params.pesoMin = filtros.pesoMin;
+    if (filtros.pesoMax !== '') params.pesoMax = filtros.pesoMax;
+    if (filtros.enPeligroSi !== filtros.enPeligroNo) {
+        params.enPeligro = filtros.enPeligroSi;
+    }
+
+    return params;
+};
+
 const Animales = () => {
     const navigate = useNavigate();
     const [animales, setAnimales] = useState([]);
@@ -57,18 +73,7 @@ const Animales = () => {
         setError('');
 
         try {
-            const params = {};
-
-            if (filtrosBusqueda.nombre.trim()) params.nombre = filtrosBusqueda.nombre.trim();
-            if (filtrosBusqueda.clase) params.clase = filtrosBusqueda.clase;
-            if (filtrosBusqueda.dieta) params.dieta = filtrosBusqueda.dieta;
-            if (filtrosBusqueda.continente) params.continente = filtrosBusqueda.continente;
-            if (filtrosBusqueda.pesoMin !== '') params.pesoMin = filtrosBusqueda.pesoMin;
-            if (filtrosBusqueda.pesoMax !== '') params.pesoMax = filtrosBusqueda.pesoMax;
-            if (filtrosBusqueda.enPeligroSi !== filtrosBusqueda.enPeligroNo) {
-                params.enPeligro = filtrosBusqueda.enPeligroSi;
-            }
-
+            const params = buildAnimalParams(filtrosBusqueda);
             const res = await api.get('/animales', { params });
             setAnimales(res.data);
         } catch (err) {
