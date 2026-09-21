@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../axios';
 
@@ -8,6 +8,10 @@ const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = 'Login | Buscador de animales';
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

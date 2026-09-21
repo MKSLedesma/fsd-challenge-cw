@@ -8,6 +8,10 @@ const Animales = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    useEffect(() => {
+        document.title = 'Buscador de animales';
+    }, []);
+
     const [opciones, setOpciones] = useState({
         clases: [],
         dietas: [],
