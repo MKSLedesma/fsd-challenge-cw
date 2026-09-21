@@ -16,7 +16,7 @@ const authenticateToken = (req, res, next) => {
         req.user = jwt.verify(token, SecretKey);
         return next();
     } catch (error) {
-        return res.status(403).json({ message: 'Token invalido o expirado' });
+        return res.status(401).json({ message: 'Token invalido o expirado' });
     }
 };
 
