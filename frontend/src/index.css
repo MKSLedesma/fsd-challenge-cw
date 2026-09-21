@@ -114,6 +114,10 @@ p {
   font-size: 24px;
 }
 
+.filter-item {
+  margin-bottom: 8px;
+}
+
 table {
   width: 100%;
   margin-top: 24px;

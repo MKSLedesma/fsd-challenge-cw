@@ -113,12 +113,12 @@ const Animales = () => {
                 <div>
                     <h2>Filtros</h2>
                 <div>
-                    <div>
+                    <div className="filter-item">
                         <label>Nombre Comun:</label>
                         <input type="text" name="nombre" value={filtros.nombre} onChange={handleChange} placeholder="Ej. Camaleón" />
                     </div>
 
-                    <div>
+                    <div className="filter-item">
                         <label>Clase:</label>
                         <select name="clase" value={filtros.clase} onChange={handleChange}>
                             <option value="">Todas</option>
@@ -129,7 +129,7 @@ const Animales = () => {
                     </div>
                 </div>
 
-                <div>
+                <div className="filter-item">
                     <label>Dieta:</label>
                     <select name="dieta" value={filtros.dieta} onChange={handleChange}>
                         <option value="">Todas</option>
@@ -139,7 +139,7 @@ const Animales = () => {
                     </select>
                 </div>
 
-                <div>
+                <div className="filter-item">
                     <label>Continente:</label>
                     <select name="continente" value={filtros.continente} onChange={handleChange}>
                         <option value="">Todas</option>
@@ -149,7 +149,7 @@ const Animales = () => {
                     </select>
                 </div>
 
-                <div>
+                <div className="filter-item">
                     <label>Habitat:</label>
                     <select name="habitat" value={filtros.habitat} onChange={handleChange}>
                         <option value="">Todas</option>
@@ -159,7 +159,7 @@ const Animales = () => {
                     </select>
                 </div>
 
-                <div>
+                <div className="filter-item">
                     <label htmlFor="pesoMin">Peso mínimo (kg):</label>
                     <input
                         id="pesoMin"
@@ -185,7 +185,7 @@ const Animales = () => {
                     />
                 </div>
 
-                <div>
+                <div className="filter-item">
                     <span>En peligro de extinción:</span>
                     <label>
                         <input
