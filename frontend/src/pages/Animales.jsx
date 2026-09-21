@@ -35,22 +35,22 @@ const Animales = () => {
         }));
     };
 
-    const fetchAnimales = async () => {
+    const fetchAnimales = async (filtrosBusqueda = filtros) => {
         setLoading(true);
         setError('');
 
         try {
             const params = {};
 
-            if (filtros.nombre.trim()) params.nombre = filtros.nombre.trim();
-            if (filtros.clase) params.clase = filtros.clase;
-            if (filtros.dieta) params.dieta = filtros.dieta;
-            if (filtros.habitat) params.habitat = filtros.habitat;
-            if (filtros.continente) params.continente = filtros.continente;
-            if (filtros.pesoMin !== '') params.pesoMin = filtros.pesoMin;
-            if (filtros.pesoMax !== '') params.pesoMax = filtros.pesoMax;
-            if (filtros.enPeligroSi !== filtros.enPeligroNo) {
-                params.enPeligro = filtros.enPeligroSi;
+            if (filtrosBusqueda.nombre.trim()) params.nombre = filtrosBusqueda.nombre.trim();
+            if (filtrosBusqueda.clase) params.clase = filtrosBusqueda.clase;
+            if (filtrosBusqueda.dieta) params.dieta = filtrosBusqueda.dieta;
+            if (filtrosBusqueda.habitat) params.habitat = filtrosBusqueda.habitat;
+            if (filtrosBusqueda.continente) params.continente = filtrosBusqueda.continente;
+            if (filtrosBusqueda.pesoMin !== '') params.pesoMin = filtrosBusqueda.pesoMin;
+            if (filtrosBusqueda.pesoMax !== '') params.pesoMax = filtrosBusqueda.pesoMax;
+            if (filtrosBusqueda.enPeligroSi !== filtrosBusqueda.enPeligroNo) {
+                params.enPeligro = filtrosBusqueda.enPeligroSi;
             }
 
             const res = await api.get('/animales', { params });
@@ -82,8 +82,8 @@ const Animales = () => {
         fetchAnimales()
     };
 
-    const handleLimpiar = (e) => {
-        setFiltros({
+    const handleLimpiar = () => {
+        const filtrosVacios = {
             nombre: '',
             clase: '',
             dieta: '',
@@ -93,7 +93,10 @@ const Animales = () => {
             pesoMax: '',
             enPeligroSi: false,
             enPeligroNo: false
-        });
+        };
+
+        setFiltros(filtrosVacios);
+        fetchAnimales(filtrosVacios);
     };
 
     const handleLogout = () => {
