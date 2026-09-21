@@ -111,6 +111,8 @@ const Animales = () => {
             </header>
             <form onSubmit={handleBuscar}>
                 <div>
+                    <h2>Filtros</h2>
+                <div>
                     <div>
                         <label>Nombre Comun:</label>
                         <input type="text" name="nombre" value={filtros.nombre} onChange={handleChange} placeholder="Ej. Camaleón" />
@@ -212,6 +214,7 @@ const Animales = () => {
                     <button type="button" onClick={handleLimpiar}>
                         Limpiar filtros
                     </button>
+                </div>
                 </div>
             </form>
             
