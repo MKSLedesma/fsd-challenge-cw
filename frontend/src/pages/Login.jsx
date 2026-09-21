@@ -15,8 +15,9 @@ const Login = () => {
         setLoading(true);
 
         try {
-            await api.post('/auth/login', { email, password });
-            navigate('/login');
+            const response = await api.post('/auth/login', { email, password });
+            localStorage.setItem('token', response.data.token);
+            navigate('/animales');
         } catch (err) {
             setError(err.response?.data?.message || 'Error al iniciar sesión');
         } finally {
