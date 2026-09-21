@@ -13,15 +13,15 @@ router.get('/', async (req, res) => {
         }
 
         if (clase) {
-            animales = animales.filter(a => a.clase.toLowerCase().includes(clase.toLowerCase().trim()));
+            animales = animales.filter(a => a.clase.toLowerCase() === clase.toLowerCase().trim());
         }
 
         if (dieta) {
-            animales = animales.filter(a => a.dieta.toLowerCase().includes(dieta.toLowerCase().trim()));
+            animales = animales.filter(a => a.dieta.toLowerCase() === dieta.toLowerCase().trim());
         }
 
         if (continente) {
-            animales = animales.filter(a => a.continente.toLowerCase().includes(continente.toLowerCase().trim()));
+            animales = animales.filter(a => a.continente.toLowerCase() === continente.toLowerCase().trim());
         }
 
         if (pesoMax !== undefined) {
