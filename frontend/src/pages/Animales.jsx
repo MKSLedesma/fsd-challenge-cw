@@ -162,7 +162,7 @@ const Animales = () => {
                     </select>
                 </div>
 
-                <div className="filter-item">
+                <div className="filter-item" style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
                     <label htmlFor="pesoMin">Peso mínimo (kg):</label>
                     <input
                         id="pesoMin"
