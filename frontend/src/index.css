@@ -95,6 +95,33 @@ p {
   margin: 0;
 }
 
+table {
+  width: 100%;
+  margin-top: 24px;
+  margin-inline: auto;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  table-layout: fixed;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  overflow-wrap: anywhere;
+}
+
+th {
+  background: var(--accent-bg);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--social-bg);
+}
+
 code,
 .counter {
   font-family: var(--mono);
