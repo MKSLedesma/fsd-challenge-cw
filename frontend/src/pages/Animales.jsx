@@ -23,7 +23,8 @@ const Animales = () => {
         continente: '',
         pesoMin: '',
         pesoMax: '',
-        enPeligro: ''
+        enPeligroSi: false,
+        enPeligroNo: false
     });
 
     const handleChange = (e) => {
@@ -48,7 +49,9 @@ const Animales = () => {
             if (filtros.continente) params.continente = filtros.continente;
             if (filtros.pesoMin !== '') params.pesoMin = filtros.pesoMin;
             if (filtros.pesoMax !== '') params.pesoMax = filtros.pesoMax;
-            if (filtros.enPeligro !== '') params.enPeligro = filtros.enPeligro;
+            if (filtros.enPeligroSi !== filtros.enPeligroNo) {
+                params.enPeligro = filtros.enPeligroSi;
+            }
 
             const res = await api.get('/animales', { params });
             setAnimales(res.data);
@@ -88,7 +91,8 @@ const Animales = () => {
             continente: '',
             pesoMin: '',
             pesoMax: '',
-            enPeligro: ''
+            enPeligroSi: false,
+            enPeligroNo: false
         });
     };
 
@@ -180,12 +184,25 @@ const Animales = () => {
                 </div>
 
                 <div>
-                    <label htmlFor="enPeligro">En peligro de extinción:</label>
-                    <select id="enPeligro" name="enPeligro" value={filtros.enPeligro} onChange={handleChange}>
-                        <option value="">Todos</option>
-                        <option value="true">Sí</option>
-                        <option value="false">No</option>
-                    </select>
+                    <span>En peligro de extinción:</span>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="enPeligroSi"
+                            checked={filtros.enPeligroSi}
+                            onChange={handleChange}
+                        />
+                        Sí
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="enPeligroNo"
+                            checked={filtros.enPeligroNo}
+                            onChange={handleChange}
+                        />
+                        No
+                    </label>
                 </div>
 
                 <div>
