@@ -205,7 +205,7 @@ const Animales = () => {
                     </label>
                 </div>
 
-                <div>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
                     <button type="submit" disabled={loading}>
                         {loading ? 'Filtrando...' : 'Filtrar'}
                     </button>
