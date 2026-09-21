@@ -87,7 +87,7 @@ const Animales = () => {
             continente: '',
             pesoMin: '',
             pesoMax: '',
-            enPeligro: false
+            enPeligro: ''
         });
     };
 
@@ -95,6 +95,8 @@ const Animales = () => {
         localStorage.removeItem('token');
         navigate('/login', { replace: true });
     };
+
+    const columnas = [...new Set(animales.flatMap((animal) => Object.keys(animal)))];
 
     return (
         <div>
@@ -191,6 +193,32 @@ const Animales = () => {
                     </button>
                 </div>
             </form>
+            
+            {error && <p>{error}</p>}
+            {loading && <p>Cargando resultados...</p>}
+            {!loading && animales.length === 0 && <p>No se encontraron animales.</p>}
+            {!loading && animales.length > 0 && (
+                <table>
+                    <thead>
+                        <tr>
+                            {columnas.map((columna) => (
+                                <th key={columna} scope="col">{columna}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {animales.map((animal) => (
+                            <tr key={animal.id}>
+                                {columnas.map((columna) => (
+                                    <td key={`${animal.id}-${columna}`}>
+                                        {String(animal[columna] ?? '')}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
         </div>
     );
 };
