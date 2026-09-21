@@ -21,7 +21,7 @@ const Animales = () => {
         continente: '',
         pesoMin: '',
         pesoMax: '',
-        enPeligro: false
+        enPeligro: ''
     });
 
     const handleChange = (e) => {
@@ -42,10 +42,11 @@ const Animales = () => {
             if (filtros.nombre.trim()) params.nombre = filtros.nombre.trim();
             if (filtros.clase) params.clase = filtros.clase;
             if (filtros.dieta) params.dieta = filtros.dieta;
+            if (filtros.habitat) params.habitat = filtros.habitat;
             if (filtros.continente) params.continente = filtros.continente;
             if (filtros.pesoMin !== '') params.pesoMin = filtros.pesoMin;
             if (filtros.pesoMax !== '') params.pesoMax = filtros.pesoMax;
-            if (filtros.enPeligro) params.enPeligro = true;
+            if (filtros.enPeligro !== '') params.enPeligro = filtros.enPeligro;
 
             const res = await api.get('/animales', { params });
             setAnimales(res.data);
@@ -116,7 +117,64 @@ const Animales = () => {
                             <option key={dieta} value={dieta}>{dieta}</option>
                         ))}
                     </select>
+                </div>
 
+                <div>
+                    <label>Continente:</label>
+                    <select name="continente" value={filtros.continente} onChange={handleChange}>
+                        <option value="">Todas</option>
+                            {opciones.continentes.map((continente) => (
+                            <option key={continente} value={continente}>{continente}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div>
+                    <label>Habitat:</label>
+                    <select name="habitat" value={filtros.habitat} onChange={handleChange}>
+                        <option value="">Todas</option>
+                            {opciones.habitats.map((habitat) => (
+                            <option key={habitat} value={habitat}>{habitat}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div>
+                    <label htmlFor="pesoMin">Peso mínimo (kg):</label>
+                    <input
+                        id="pesoMin"
+                        type="number"
+                        name="pesoMin"
+                        min="0"
+                        step="any"
+                        value={filtros.pesoMin}
+                        onChange={handleChange}
+                        placeholder="Minimo"
+                    />
+
+                    <label htmlFor="pesoMax">Peso máximo (kg):</label>
+                    <input
+                        id="pesoMax"
+                        type="number"
+                        name="pesoMax"
+                        min="0"
+                        step="any"
+                        value={filtros.pesoMax}
+                        onChange={handleChange}
+                        placeholder="Maximo"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="enPeligro">En peligro de extinción:</label>
+                    <select id="enPeligro" name="enPeligro" value={filtros.enPeligro} onChange={handleChange}>
+                        <option value="">Todos</option>
+                        <option value="true">Sí</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+
+                <div>
                     <button type="submit" disabled={loading}>
                         {loading ? 'Filtrando...' : 'Filtrar'}
                     </button>
