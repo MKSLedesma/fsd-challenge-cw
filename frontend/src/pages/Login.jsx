@@ -26,16 +26,19 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div className="auth-page">
+            <header className="auth-header">
+                <h1>Buscador de animales</h1>
+            </header>
             <h2>Ingresar a su cuenta</h2>
             {error && <p>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Email:</label>
+                    <label>Email: </label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                 </div>
                 <div>
-                    <label>Contrasenia:</label>
+                    <label>Contraseña: </label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                 </div>
                 <button type="submit" disabled={loading}>

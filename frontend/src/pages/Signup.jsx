@@ -25,23 +25,26 @@ const Signup = () => {
     };
 
     return (
-        <div>
+        <div className="auth-page">
+            <header className="auth-header">
+                <h1>Buscador de animales</h1>
+            </header>
             <h2>Crear Cuenta</h2>
             {error && <p>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Email:</label>
+                    <label>Email: </label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                 </div>
                 <div>
-                    <label>Contrasenia (minimo 6 caracteres):</label>
+                    <label>Contraseña (minimo 6 caracteres): </label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                 </div>
                 <button type="submit" disabled={loading}>
                     {loading ? 'Registrando...' : "Registrarse"}
                 </button>
             </form>
-            <p>Ya tenes cuenta? <Link to="/login">Inicia sesion</Link></p>
+            <p>¿Ya tenés cuenta? <Link to="/login">Inicia sesion</Link></p>
         </div>
     );
 };

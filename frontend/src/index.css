@@ -114,6 +114,23 @@ p {
   font-size: 24px;
 }
 
+.auth-page {
+  padding-top: 64px;
+}
+
+.auth-header {
+  position: absolute;
+  inset: 0 0 auto;
+  padding: 12px 20px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.auth-header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
 .filter-item {
   margin-bottom: 8px;
 }
