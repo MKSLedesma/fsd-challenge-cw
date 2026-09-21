@@ -5,6 +5,7 @@ import api from '../axios';
 const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -42,7 +43,10 @@ const Signup = () => {
                 </div>
                 <div>
                     <label>Contraseña (minimo 6 caracteres): </label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                    <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                    <button type="button" onClick={() => setShowPassword((visible) => !visible)}>
+                        {showPassword ? 'Ocultar' : 'Mostrar'}
+                    </button>
                 </div>
                 <button type="submit" disabled={loading}>
                     {loading ? 'Registrando...' : "Registrarse"}
