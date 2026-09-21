@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../axios';
+import PasswordInput from '../components/PasswordInput';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -42,13 +42,7 @@ const Login = () => {
                     <label>Email: </label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                 </div>
-                <div>
-                    <label>Contraseña: </label>
-                    <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required/>
-                    <button type="button" onClick={() => setShowPassword((visible) => !visible)}>
-                        {showPassword ? 'Ocultar' : 'Mostrar'}
-                    </button>
-                </div>
+                <PasswordInput label="Contraseña:" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <button type="submit" disabled={loading}>
                     {loading ? 'Iniciando sesión...' : "Iniciar sesión"}
                 </button>
