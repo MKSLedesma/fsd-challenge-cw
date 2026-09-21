@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import api from '../axios';
 
 const Animales = () => {
+    const navigate = useNavigate();
     const [animales, setAnimales] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -89,8 +91,14 @@ const Animales = () => {
         });
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login', { replace: true });
+    };
+
     return (
         <div>
+            <button type="button" onClick={handleLogout}>Cerrar sesión</button>
             <form onSubmit={handleBuscar}>
                 <div>
                     <div>
