@@ -104,6 +104,19 @@ const Animales = () => {
         navigate('/login', { replace: true });
     };
 
+    const nombresColumnas = {
+        id: 'ID',
+        nombreComun: 'Nombre común',
+        nombreCientifico: 'Nombre científico',
+        clase: 'Clase',
+        habitat: 'Hábitat',
+        dieta: 'Dieta',
+        pesoPromedioKg: 'Peso promedio (kg)',
+        esperanzaVidaAnios: 'Esperanza de vida (años)',
+        continente: 'Continente',
+        enPeligroExtincion: 'En peligro de extinción'
+    };
+
     const columnas = [...new Set(animales.flatMap((animal) => Object.keys(animal)))];
 
     return (
@@ -219,7 +232,9 @@ const Animales = () => {
                     <thead>
                         <tr>
                             {columnas.map((columna) => (
-                                <th key={columna} scope="col">{columna}</th>
+                                <th key={columna} scope="col">
+                                    {nombresColumnas[columna] || columna}
+                                </th>
                             ))}
                         </tr>
                     </thead>
