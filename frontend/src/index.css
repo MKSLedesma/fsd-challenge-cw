@@ -95,6 +95,25 @@ p {
   margin: 0;
 }
 
+.animals-page {
+  padding-top: 64px;
+}
+
+.animals-header {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.animals-header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
 table {
   width: 100%;
   margin-top: 24px;

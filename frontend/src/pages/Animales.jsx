@@ -100,8 +100,11 @@ const Animales = () => {
     const columnas = [...new Set(animales.flatMap((animal) => Object.keys(animal)))];
 
     return (
-        <div>
-            <button type="button" onClick={handleLogout}>Cerrar sesión</button>
+        <div className="animals-page">
+            <header className="animals-header">
+                <h1>Buscador de animales</h1>
+                <button type="button" onClick={handleLogout}>Cerrar sesión</button>
+            </header>
             <form onSubmit={handleBuscar}>
                 <div>
                     <div>
