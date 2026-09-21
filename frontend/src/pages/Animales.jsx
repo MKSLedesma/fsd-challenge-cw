@@ -2,6 +2,30 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import api from '../axios';
 
+const FILTROS_VACIOS = {
+    nombre: '',
+    clase: '',
+    dieta: '',
+    continente: '',
+    pesoMin: '',
+    pesoMax: '',
+    enPeligroSi: false,
+    enPeligroNo: false
+};
+
+const NOMBRES_COLUMNAS = {
+    id: 'ID',
+    nombreComun: 'Nombre común',
+    nombreCientifico: 'Nombre científico',
+    clase: 'Clase',
+    habitat: 'Hábitat',
+    dieta: 'Dieta',
+    pesoPromedioKg: 'Peso promedio (kg)',
+    esperanzaVidaAnios: 'Esperanza de vida (años)',
+    continente: 'Continente',
+    enPeligroExtincion: 'En peligro de extinción'
+};
+
 const Animales = () => {
     const navigate = useNavigate();
     const [animales, setAnimales] = useState([]);
@@ -18,16 +42,7 @@ const Animales = () => {
         continentes: []
     });
 
-    const [filtros, setFiltros] = useState({
-        nombre: '',
-        clase: '',
-        dieta: '',
-        continente: '',
-        pesoMin: '',
-        pesoMax: '',
-        enPeligroSi: false,
-        enPeligroNo: false
-    });
+    const [filtros, setFiltros] = useState(FILTROS_VACIOS);
 
     const handleChange = (e) => {
         const {name, value, type, checked} = e.target;
@@ -84,37 +99,13 @@ const Animales = () => {
     };
 
     const handleLimpiar = () => {
-        const filtrosVacios = {
-            nombre: '',
-            clase: '',
-            dieta: '',
-            continente: '',
-            pesoMin: '',
-            pesoMax: '',
-            enPeligroSi: false,
-            enPeligroNo: false
-        };
-
-        setFiltros(filtrosVacios);
-        fetchAnimales(filtrosVacios);
+        setFiltros(FILTROS_VACIOS);
+        fetchAnimales(FILTROS_VACIOS);
     };
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         navigate('/login', { replace: true });
-    };
-
-    const nombresColumnas = {
-        id: 'ID',
-        nombreComun: 'Nombre común',
-        nombreCientifico: 'Nombre científico',
-        clase: 'Clase',
-        habitat: 'Hábitat',
-        dieta: 'Dieta',
-        pesoPromedioKg: 'Peso promedio (kg)',
-        esperanzaVidaAnios: 'Esperanza de vida (años)',
-        continente: 'Continente',
-        enPeligroExtincion: 'En peligro de extinción'
     };
 
     const columnas = [...new Set(animales.flatMap((animal) => Object.keys(animal)))];
@@ -233,7 +224,7 @@ const Animales = () => {
                         <tr>
                             {columnas.map((columna) => (
                                 <th key={columna} scope="col">
-                                    {nombresColumnas[columna] || columna}
+                                    {NOMBRES_COLUMNAS[columna] || columna}
                                 </th>
                             ))}
                         </tr>
