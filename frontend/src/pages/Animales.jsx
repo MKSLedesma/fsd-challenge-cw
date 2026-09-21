@@ -53,6 +53,7 @@ const Animales = () => {
             const res = await api.get('/animales', { params });
             setAnimales(res.data);
         } catch (err) {
+            setAnimales([]);
             setError(err.response?.data?.message || 'Error al cargar los animales');
         } finally {
             setLoading(false);
