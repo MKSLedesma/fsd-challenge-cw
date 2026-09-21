@@ -11,15 +11,13 @@ const Animales = () => {
     const [opciones, setOpciones] = useState({
         clases: [],
         dietas: [],
-        continentes: [],
-        habitats: []
+        continentes: []
     });
 
     const [filtros, setFiltros] = useState({
         nombre: '',
         clase: '',
         dieta: '',
-        habitat: '',
         continente: '',
         pesoMin: '',
         pesoMax: '',
@@ -45,7 +43,6 @@ const Animales = () => {
             if (filtrosBusqueda.nombre.trim()) params.nombre = filtrosBusqueda.nombre.trim();
             if (filtrosBusqueda.clase) params.clase = filtrosBusqueda.clase;
             if (filtrosBusqueda.dieta) params.dieta = filtrosBusqueda.dieta;
-            if (filtrosBusqueda.habitat) params.habitat = filtrosBusqueda.habitat;
             if (filtrosBusqueda.continente) params.continente = filtrosBusqueda.continente;
             if (filtrosBusqueda.pesoMin !== '') params.pesoMin = filtrosBusqueda.pesoMin;
             if (filtrosBusqueda.pesoMax !== '') params.pesoMax = filtrosBusqueda.pesoMax;
@@ -87,7 +84,6 @@ const Animales = () => {
             nombre: '',
             clase: '',
             dieta: '',
-            habitat: '',
             continente: '',
             pesoMin: '',
             pesoMax: '',
@@ -117,12 +113,12 @@ const Animales = () => {
                     <h2>Filtros</h2>
                 <div>
                     <div className="filter-item">
-                        <label>Nombre Comun:</label>
+                        <label>Nombre Común: </label>
                         <input type="text" name="nombre" value={filtros.nombre} onChange={handleChange} placeholder="Ej. Camaleón" />
                     </div>
 
                     <div className="filter-item">
-                        <label>Clase:</label>
+                        <label>Clase: </label>
                         <select name="clase" value={filtros.clase} onChange={handleChange}>
                             <option value="">Todas</option>
                             {opciones.clases.map((clase) => (
@@ -133,7 +129,7 @@ const Animales = () => {
                 </div>
 
                 <div className="filter-item">
-                    <label>Dieta:</label>
+                    <label>Dieta: </label>
                     <select name="dieta" value={filtros.dieta} onChange={handleChange}>
                         <option value="">Todas</option>
                             {opciones.dietas.map((dieta) => (
@@ -143,7 +139,7 @@ const Animales = () => {
                 </div>
 
                 <div className="filter-item">
-                    <label>Continente:</label>
+                    <label>Continente: </label>
                     <select name="continente" value={filtros.continente} onChange={handleChange}>
                         <option value="">Todas</option>
                             {opciones.continentes.map((continente) => (
@@ -152,18 +148,8 @@ const Animales = () => {
                     </select>
                 </div>
 
-                <div className="filter-item">
-                    <label>Habitat:</label>
-                    <select name="habitat" value={filtros.habitat} onChange={handleChange}>
-                        <option value="">Todas</option>
-                            {opciones.habitats.map((habitat) => (
-                            <option key={habitat} value={habitat}>{habitat}</option>
-                        ))}
-                    </select>
-                </div>
-
                 <div className="filter-item" style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
-                    <label htmlFor="pesoMin">Peso mínimo (kg):</label>
+                    <label htmlFor="pesoMin">Peso mínimo (kg): </label>
                     <input
                         id="pesoMin"
                         type="number"
@@ -175,7 +161,7 @@ const Animales = () => {
                         placeholder="Minimo"
                     />
 
-                    <label htmlFor="pesoMax">Peso máximo (kg):</label>
+                    <label htmlFor="pesoMax">Peso máximo (kg): </label>
                     <input
                         id="pesoMax"
                         type="number"
@@ -189,7 +175,7 @@ const Animales = () => {
                 </div>
 
                 <div className="filter-item">
-                    <span>En peligro de extinción:</span>
+                    <span>En peligro de extinción: </span>
                     <label>
                         <input
                             type="checkbox"

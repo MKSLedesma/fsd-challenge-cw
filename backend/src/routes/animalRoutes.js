@@ -57,13 +57,11 @@ router.get('/opciones', async(req, res) => {
         const clases =  [...new Set(animales.map(a => a.clase).filter(Boolean))].sort();
         const dietas =  [...new Set(animales.map(a => a.dieta).filter(Boolean))].sort();
         const continentes =  [...new Set(animales.map(a => a.continente).filter(Boolean))].sort();
-        const habitats = [...new Set(animales.map(a => a.habitat).filter(Boolean))].sort();
 
         return res.status(200).json({
             clases,
             dietas,
-            continentes,
-            habitats
+            continentes
         });
     } catch (error) {
         console.error('Error al obtener las opciones de los filtros: ', error);
