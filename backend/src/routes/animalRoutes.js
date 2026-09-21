@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
             animales = animales.filter(a => a.continente.toLowerCase().includes(continente.toLowerCase().trim()));
         }
 
-        if (pesoMin !== undefined) {
+        if (pesoMax !== undefined) {
             const max = parseFloat(pesoMax);
             if (!isNaN(max)) {
                 animales = animales.filter(a => a.pesoPromedioKg <= max);
@@ -57,13 +57,13 @@ router.get('/opciones', async(req, res) => {
         const clases =  [...new Set(animales.map(a => a.clase).filter(Boolean))].sort();
         const dietas =  [...new Set(animales.map(a => a.dieta).filter(Boolean))].sort();
         const continentes =  [...new Set(animales.map(a => a.continente).filter(Boolean))].sort();
-        const habitat = [...new Set(animales.map(a => a.habitat).filter(Boolean))].sort();
+        const habitats = [...new Set(animales.map(a => a.habitat).filter(Boolean))].sort();
 
         return res.status(200).json({
             clases,
             dietas,
             continentes,
-            habitat
+            habitats
         });
     } catch (error) {
         console.error('Error al obtener las opciones de los filtros: ', error);

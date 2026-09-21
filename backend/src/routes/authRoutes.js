@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { readUsers, writeUsers } = require('../utils/db');
 
 const router = express.Router();
-const SecretKey = "clave_secreta"
+const SecretKey = process.env.JWT_SECRET || 'clave_secreta';
 
 const isValidEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
