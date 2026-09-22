@@ -1,5 +1,5 @@
 const test = require('node:test');
-const assert = require('node:assert');
+const assert = require('node:assert/strict');
 const jwt = require('jsonwebtoken');
 const request = require('supertest');
 const app = require('../src/app');
