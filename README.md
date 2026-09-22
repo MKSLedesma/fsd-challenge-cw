@@ -10,13 +10,14 @@ filtros de busqueda y visualización de resultados en una tabla.
 
 * **Backend:** Node.js + Express
 * **Frontend:** React + Vite
-* **Persistencia:** archivos JSON
+* **Persistencia:** MongoDB
 * **Autenticacion:** bcrypt + JSON Web Token (JWT)
 
 ## Estructura del proyecto
 
-* `backend/database/animals.json`: dataset de animales.
-* `backend/database/users.json`: usuarios registrados.
+* `backend/database/animals.json`: dataset inicial para cargar en MongoDB.
+* `backend/src/models/users.js`: modelo de usuarios de MongoDB.
+* `backend/src/models/animales.js`: modelo de animales de MongoDB.
 * `backend/src/routes/authRoutes.js`: registro y login.
 * `backend/src/routes/animalRoutes.js`: consulta y filtros de animales.
 * `backend/src/middleware/authMiddleware.js`: validación del token.
@@ -33,8 +34,11 @@ filtros de busqueda y visualización de resultados en una tabla.
 ```bash
 cd backend
 npm install
+npm run seed
 npm run dev
 ```
+
+Antes de ejecutar los comandos, crear `backend/.env` y completa `MONGODB_URI` y `JWT_SECRET`.
 
 El servidor queda alojado en `http://localhost:4000`.
 
@@ -90,10 +94,10 @@ Todos los filtros son opcionales y combinables:
 
 ## Iteracion 1: Backend basico
 
-Implementación de API REST con Express y persistencia con archivos JSON.
+Implementación de API REST con Express y persistencia con MongoDB.
 
-* Lectura del dataset de animales.
-* Registro de usuarios en `users.json`.
+* Lectura del dataset de animales desde MongoDB.
+* Registro de usuarios en MongoDB.
 * Validación de email y password.
 * Hash de contraseñas usando bcrypt.
 * Login con generación de token JWT.
@@ -160,12 +164,13 @@ Se reubica la logica para separar responsabilidades y mejorar la lectura y verif
 
 ## Limitaciones
 
-* La persistencia se basa en archivos JSON y la aplicación funciona centralizada.
+* La persistencia depende de una instancia de MongoDB configurada mediante `MONGODB_URI`.
+* Los animales deben cargarse inicialmente con `npm run seed`.
 
 ---
 
 ## Uso de Inteligencia Artificial
 
 * **Herramienta:** Gemini como asistente de IA.
-* **Alcance:** Asistencia en documentación e implementación de autenticación y rutas protegidas, estilos basicos, sintaxis de JS y recomendaciones de modularización.
+* **Alcance:** Asistencia en documentación e implementación de conexión a MongoDB, autenticación y rutas protegidas, estilos basicos, sintaxis de JS y recomendaciones de modularización.
 * **Revisión:** Las propuestas fueron revisadas y adaptadas al codigo existente, validando el comportamiento esperado de la API y probando la interacción con el frontend.
