@@ -1,8 +1,18 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 const request = require('supertest');
 const app = require('../src/app');
+const connectDatabase = require('../src/config/database');
+
+test.before(async () => {
+    await connectDatabase();
+});
+
+test.after(async () => {
+    await mongoose.disconnect();
+});
 
 const token = jwt.sign(
     { id: 1, email: 'test@example.com' },
