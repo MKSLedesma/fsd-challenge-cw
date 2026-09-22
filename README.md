@@ -38,6 +38,13 @@ npm run dev
 
 El servidor queda alojado en `http://localhost:4000`.
 
+### Tests del backend
+
+```bash
+cd backend
+npm test
+```
+
 ### 2. Frontend
 
 En otra terminal:
