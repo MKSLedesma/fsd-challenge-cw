@@ -1,48 +1,49 @@
 const express = require('express');
 const router = express.Router();
-const { readAnimals } = require('../utils/db')
+const Animal = require('../models/animales');
 
 router.get('/', async (req, res) => {
     try {
         const { nombre, clase, dieta, continente, pesoMin, pesoMax, enPeligro } = req.query;
 
-        let animales = await readAnimals();
+        const filters = {};
 
         if (nombre) {
-            animales = animales.filter(a => a.nombreComun.toLowerCase().includes(nombre.toLowerCase().trim()));
+            filters.nombreComun = { $regex: nombre.trim(), $options: 'i' };
         }
 
         if (clase) {
-            animales = animales.filter(a => a.clase.toLowerCase() === clase.toLowerCase().trim());
+            filters.clase = clase.trim();
         }
 
         if (dieta) {
-            animales = animales.filter(a => a.dieta.toLowerCase() === dieta.toLowerCase().trim());
+            filters.dieta = dieta.trim();
         }
 
         if (continente) {
-            animales = animales.filter(a => a.continente.toLowerCase() === continente.toLowerCase().trim());
+            filters.continente = continente.trim();
         }
 
         if (pesoMax !== undefined) {
             const max = parseFloat(pesoMax);
             if (!isNaN(max)) {
-                animales = animales.filter(a => a.pesoPromedioKg <= max);
+                filters.pesoPromedioKg = { ...filters.pesoPromedioKg, $lte: max };
             }
         }
 
         if (pesoMin !== undefined) {
             const min = parseFloat(pesoMin);
             if (!isNaN(min)) {
-                animales = animales.filter(a => a.pesoPromedioKg >= min);
+                filters.pesoPromedioKg = { ...filters.pesoPromedioKg, $gte: min };
             }
         }
 
         if (enPeligro !== undefined) {
             const enPeligroBool = enPeligro === 'true'
-            animales = animales.filter(a => a.enPeligroExtincion === enPeligroBool);
+            filters.enPeligroExtincion = enPeligroBool;
         }
 
+        const animales = await Animal.find(filters).select('-_id').lean();
         return res.status(200).json(animales);
     } catch (error) {
         console.error('Error al obtener animales: ', error);
@@ -52,7 +53,7 @@ router.get('/', async (req, res) => {
 
 router.get('/opciones', async(req, res) => {
     try {
-        const animales = await readAnimals();
+        const animales = await Animal.find().select('-_id').lean();
 
         const clases =  [...new Set(animales.map(a => a.clase).filter(Boolean))].sort();
         const dietas =  [...new Set(animales.map(a => a.dieta).filter(Boolean))].sort();
