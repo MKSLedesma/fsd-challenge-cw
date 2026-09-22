@@ -4,17 +4,21 @@ const path = require('path');
 const userFilePath = path.join(__dirname, '../../database/users.json');
 const animalsFilePath = path.join(__dirname, '../../database/animals.json');
 
-async function readUsers() {
+async function readJsonFile(filePath) {
     try {
-        const data = await fs.readFile(userFilePath, 'utf-8');
+        const data = await fs.readFile(filePath, 'utf-8');
         return JSON.parse(data || '[]');
     } catch (error) {
         if (error.code === 'ENOENT') {
-            await fs.writeFile(userFilePath, '[]');
+            await fs.writeFile(filePath, '[]');
             return [];
         }
         throw error;
     }
+}
+
+async function readUsers() {
+    return readJsonFile(userFilePath);
 }
 
 async function writeUsers(users) {
@@ -22,16 +26,7 @@ async function writeUsers(users) {
 }
 
 async function readAnimals() {
-    try {
-        const data = await fs.readFile(animalsFilePath, 'utf-8');
-        return JSON.parse(data || '[]');
-    } catch (error) {
-        if (error.code === 'ENOENT') {
-            await fs.writeFile(animalsFilePath, '[]');
-            return [];
-        }
-        throw error;
-    }
+    return readJsonFile(animalsFilePath);
 }
 
 module.exports = {
