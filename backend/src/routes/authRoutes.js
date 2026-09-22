@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { readUsers, writeUsers } = require('../utils/db');
+const User = require('../models/users');
 
 const router = express.Router();
 const SecretKey = process.env.JWT_SECRET || 'clave_secreta';
@@ -22,23 +22,22 @@ router.post('/signup', async (req, res) => {
             return res.status(400).json({ message: 'La contrasenia debe tener al menos 6 caracteres' });
         }
 
-        const users = await readUsers();
-
-        const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+        const normalizedEmail = email.toLowerCase();
+        const existingUser = await User.findOne({ email: normalizedEmail });
         if (existingUser) {
             return res.status(400).json({ message: 'El email ya se encuentra registrado' });
         }
 
         const passwordHash = await bcrypt.hash(password, 10);
 
+        const lastUser = await User.findOne().sort({ id: -1 }).select('id').lean();
         const newUser = {
-            id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
-            email: email.toLowerCase(),
+            id: lastUser ? lastUser.id + 1 : 1,
+            email: normalizedEmail,
             passwordHash
         };
 
-        users.push(newUser);
-        await writeUsers(users);
+        await User.create(newUser);
 
         return res.status(201).json({ message: 'Usuario registrado satisfactoriamente' });
     } catch (error) {
@@ -55,8 +54,7 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'Se requiere email y contrasenia' });
         }
 
-        const users = await readUsers();
-        const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+        const user = await User.findOne({ email: email.toLowerCase() }).lean();
 
         if (!user) {
             return res.status(401).json({ message: 'Email o contrasenia invalidos' });
