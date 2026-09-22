@@ -1,6 +1,7 @@
-require('dotenv').config();
+require('./config/env');
 const fs = require('fs/promises');
 const path = require('path');
+const mongoose = require('mongoose');
 const connectDatabase = require('./config/database');
 const Animal = require('./models/animales');
 
@@ -20,4 +21,7 @@ seedAnimals()
     .catch((error) => {
         console.error('No se pudieron cargar los animales:', error.message);
         process.exitCode = 1;
+    })
+    .finally(async () => {
+        await mongoose.disconnect();
     });
