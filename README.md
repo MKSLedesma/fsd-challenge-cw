@@ -79,6 +79,49 @@ npm run build
 * `GET /api/animales/opciones`: devuelve las opciones disponibles para clase,
 	dieta y continente; tambien requiere autenticación.
 
+### Visualizacion de los diagramas
+
+Para verlos en la vista previa de Markdown puede ser necesaria una extension compatible con Mermaid, como **Markdown Preview Mermaid Support**.
+
+## Flujo de autenticación con JWT
+
+El frontend guarda el JWT recibido en el login y lo envía en las solicitudes protegidas.
+
+```mermaid
+sequenceDiagram
+	actor Usuario
+	participant Frontend
+	participant Backend
+
+	Usuario->>Frontend: Ingresa email y contrasenia
+	Frontend->>Backend: POST /api/auth/login
+	Backend-->>Frontend: Devuelve JWT
+	Frontend->>Frontend: Guarda JWT en localStorage
+	Frontend->>Backend: Solicitud protegida + Bearer JWT
+	Backend->>Backend: Verifica el JWT
+	Backend-->>Frontend: Datos o HTTP 401
+```
+
+## Comunicacion del frontend con el backend mediante Axios
+
+Axios define la URL base, agrega el token y devuelve la respuesta al frontend.
+
+```mermaid
+sequenceDiagram
+	actor Usuario
+	participant Frontend
+	participant Axios
+	participant Backend
+
+	Usuario->>Frontend: Consulta animales
+	Frontend->>Axios: api.get('/animales')
+	Axios->>Axios: Lee el JWT de localStorage
+	Axios->>Backend: GET /api/animales + Bearer JWT
+	Backend-->>Axios: JSON o HTTP 401
+	Axios-->>Frontend: Entrega la respuesta
+ 	Frontend-->>Usuario: Muestra los datos o vuelve a /login
+```
+
 ### Filtros de animales
 
 Todos los filtros son opcionales y combinables:
